@@ -30,6 +30,13 @@ TEMPLATE_DIRS = (
     os.path.join(PROJECT_ROOT, 'templates'),
 )
 
+MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+)
 
 LOGGING = {
     'version': 1,
@@ -98,6 +105,7 @@ INSTALLED_APPS = (
     'autocomplete_light.example_apps.security_test',
     'autocomplete_light.example_apps.dependant_autocomplete',
     'autocomplete_light.example_apps.non_admin_add_another',
+    'autocomplete_light.example_apps.create_choice_on_the_fly',
 
     'navigation_autocomplete',
 )

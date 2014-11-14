@@ -36,14 +36,19 @@ class GenericModelForm(forms.ModelForm):
 
         # take care of virtual fields since django doesn't
         for field in self._meta.model._meta.virtual_fields:
+            null = self._meta.model._meta.get_field(field.ct_field).null
             value = self.cleaned_data.get(field.name, None)
 
-            if value:
+            if value or null:
                 setattr(self.instance, field.name, value)
 
+            if value:
                 self.cleaned_data[field.ct_field] = \
                     ContentType.objects.get_for_model(value)
                 self.cleaned_data[field.fk_field] = value.pk
+            elif null:
+                self.cleaned_data[field.ct_field] = None
+                self.cleaned_data[field.fk_field] = None
 
 
 class GenericModelChoiceField(fields.Field):
